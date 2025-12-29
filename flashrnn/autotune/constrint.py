@@ -1491,7 +1491,7 @@ class DivisibleConstraint(Constraint):
 
         change = True
         any_change = False
-        help_var = "_" + str(uuid.uuid1()).replace("-", "") + "_"
+        help_var = "_" + str(uuid.uuid1()).replace("-", "") + "_"  # @BUG_HERE
         while change:
             change = False
             dividend_var = self.terms[0].bottomup(variables)
