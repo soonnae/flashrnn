@@ -1,6 +1,6 @@
 import hashlib
 import os
-import pickle
+import json
 from functools import wraps
 
 from filelock import FileLock
@@ -29,12 +29,12 @@ def cache_decorator(cache_dir):
             with lock:
                 # If the result is cached, return it.
                 if os.path.exists(filepath):
-                    with open(filepath, "rb") as cache_file:
-                        res = pickle.load(cache_file)  # TODO! serialize this as json!
+                    with open(filepath, "r") as cache_file:
+                        res = json.load(cache_file)
                 else:
                     res = func(*args, **kwargs)
-                    with open(filepath, "wb") as cache_file:
-                        pickle.dump(res, cache_file)
+                    with open(filepath, "w") as cache_file:
+                        json.dump(res, cache_file)
 
             return res
 

@@ -125,7 +125,10 @@ def generate_kernel_settings(model_config):
             if not rule:
                 continue
 
-            if not eval(rule.format(**eval_setting)):
+            try:
+                # Use a safer evaluation method
+                passed = eval(rule.format(**eval_setting), {"__builtins__": {}})
+            except Exception:
                 passed = False
 
         if passed:
